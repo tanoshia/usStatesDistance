@@ -5,3 +5,15 @@ Output: [distance,direction] <br>
 
 Example input: ['California','Washington'] <br>
 Example output: [589,'North'] <br>
+
+Notes: <br>
+- invalid (non-US state name) input will result in [None,None] output <br>
+- input is case insensative <br>
+- test this code out locally via testProject.py which provides an example client to the microservice, run after microservice is running <br>
+
+
+required libraries: <br>
+- pyzmq      (ZeroMQ for communication) <br>
+- geopandas  (to read and interpret the US states map) <br>
+    - pip install pyzmq geopandas <br>
+
