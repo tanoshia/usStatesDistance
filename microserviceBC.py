@@ -9,10 +9,7 @@ context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
 
-# load the shapefile of the US states
-states_gdf = gpd.read_file('./usStatesShapefile-shp/usStatesShapefile.shp')
-
-state_capitals = {
+STATE_CAPITALS = {
     "Alabama":          ("Montgomery", 32.3792, -86.3077),
     "Alaska":           ("Juneau", 58.3019, -134.4197),
     "Arizona":          ("Phoenix", 33.4484, -112.0740),
@@ -67,25 +64,13 @@ state_capitals = {
 
 
 def inputValidation(state):
-    # US state names to check input against, uppercase for case insensitive comparison
-    validStatesUpper = [
-        'ALABAMA', 'ALASKA', 'ARIZONA', 'ARKANSAS', 'CALIFORNIA', 'COLORADO',
-        'CONNECTICUT', 'DELAWARE', 'FLORIDA', 'GEORGIA', 'HAWAII', 'IDAHO',
-        'ILLINOIS', 'INDIANA', 'IOWA', 'KANSAS', 'KENTUCKY', 'LOUISIANA',
-        'MAINE', 'MARYLAND', 'MASSACHUSETTS', 'MICHIGAN', 'MINNESOTA',
-        'MISSISSIPPI', 'MISSOURI', 'MONTANA', 'NEBRASKA', 'NEVADA',
-        'NEW HAMPSHIRE', 'NEW JERSEY', 'NEW MEXICO', 'NEW YORK',
-        'NORTH CAROLINA', 'NORTH DAKOTA', 'OHIO', 'OKLAHOMA', 'OREGON',
-        'PENNSYLVANIA', 'RHODE ISLAND', 'SOUTH CAROLINA', 'SOUTH DAKOTA',
-        'TENNESSEE', 'TEXAS', 'UTAH', 'VERMONT', 'VIRGINIA', 'WASHINGTON',
-        'WEST VIRGINIA', 'WISCONSIN', 'WYOMING'
-    ]
-    # normalize input to uppercase for case insensitive comparison
-    stateUpper = state.upper()
-    valid = stateUpper in validStatesUpper
+    # normalize input to uppercase for case-insensitive comparison
+    state_upper = state.upper()
+    # check if normalized state name is in the keys of STATE_CAPITALS, also normalized to uppercase
+    valid = state_upper in {key.upper() for key in STATE_CAPITALS.keys()}
     if not(valid):
-        print("Invalid state name("+state+")")
-    return valid # True for valid, False for not
+        print("Invalid state name ("+state+")")
+    return valid  # True for valid, False for not
 
 
 def sendReply(distance, direction, capital = False): # capitals being an optional var until full state lines func done
@@ -108,9 +93,12 @@ def findNearestPoints(state1, state2):
     state1 = state1.upper()
     state2 = state2.upper()
 
+    # load the shapefile of the US states
+    STATES_GDF = gpd.read_file('./usStatesShapefile-shp/usStatesShapefile.shp')
+
     # extract the geometry for state1 using 'State_Name' shp column name
-    state1Geo = states_gdf[states_gdf['State_Name'].str.upper() == state1].geometry.values[0]
-    state2Geo = states_gdf[states_gdf['State_Name'].str.upper() == state2].geometry.values[0]
+    state1Geo = STATES_GDF[STATES_GDF['State_Name'].str.upper() == state1].geometry.values[0]
+    state2Geo = STATES_GDF[STATES_GDF['State_Name'].str.upper() == state2].geometry.values[0]
 
     point1, point2 = nearest_points(state1Geo, state2Geo)
 
@@ -128,7 +116,7 @@ def findNearestPoints(state1, state2):
 # for capitals
 def stateCapitalLat(state): # helper for capital distance calulation
     try:
-        _, lat, _ = state_capitals[state]  # _ ignores that column
+        _, lat, _ = STATE_CAPITALS[state]  # _ ignores that column
         return lat
     except KeyError:  # case that state not found
         return None
@@ -136,7 +124,7 @@ def stateCapitalLat(state): # helper for capital distance calulation
 # for capitals 
 def stateCapitalLon(state): # helper for capital distance calulation
     try:
-        _, _, lon = state_capitals[state]  # _ ignores that column
+        _, _, lon = STATE_CAPITALS[state]  # _ ignores that column
         return lon
     except KeyError:  # case that state not found
         return None
@@ -227,8 +215,6 @@ def main():
 
         state1 = statesInput[0]
         state2 = statesInput[1]
-        print("   State1:", state1)
-        print("   State2:", state2)
 
         if inputValidation(state1) and inputValidation(state2):
             [lat1, lon1, lat2, lon2] = findNearestPoints(state1, state2)
@@ -241,7 +227,6 @@ def main():
             print("From",state1,"to",state2,"is", distance,"miles",direction)
             sendReply(distance, direction)
         else: # on invalid statename input
-            print("not valid input")
             sendReply(None,None)
             
         # for capitals
