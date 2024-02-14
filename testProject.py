@@ -12,6 +12,7 @@ socket.connect("tcp://localhost:5555")
 
 
 def main():
+    # repeatSingleTest()
     multiTest()
 
 
@@ -31,12 +32,14 @@ def repeatSingleTest():
 def multiTest():
     print("SENDING:  \"A message from Alpha\"")
     testCases = [
-        ["California","California"],
-        ["California","Oregon"],
         ["California","Washington"],
-        ["California","Nevada"],
+        ["California","Oregon"],
+        ["Oregon","California"],
+        ["California","Idaho"],
         ["California","New York"],
         ["New York","California"],
+        ["California","California"],
+        ["California","Nevada"],
         ["Minnesota","Texas"],
         ["Florida","Washington"],
         ["Florida","Narnia"],
@@ -45,12 +48,13 @@ def multiTest():
     ]
     for testCases in testCases:
         # serialize data to JSON string and send
+        print("SENDING:  ")
         socket.send_json(testCases)
 
         message = socket.recv()
         print("RECIEVED:  A message from %s" % message.decode('utf-8'),"\n")
 
-        time.sleep(4)
+        time.sleep(1)
 
 
 
