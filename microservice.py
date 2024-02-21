@@ -82,7 +82,7 @@ def sendReply(distance, direction, capital = False): # capitals being an optiona
     time.sleep(1)
 
     # send reply back to client
-    print("SENDING: ",result,"\n")
+    print(" SENDING: ",result,"\n")
     socket.send_json(result)
 
 
@@ -134,21 +134,21 @@ def stateCapitalLon(state): # helper for capital distance calulation
 # state distances
     
 # for capitals
-def calcDistance(state1, state2): # prep states input for haversine formula for capital distance calulation
-    lat1 = stateCapitalLat(state1)
-    lon1 = stateCapitalLon(state1)
-    lat2 = stateCapitalLat(state2)
-    lon2 = stateCapitalLon(state2)
+# def calcDistance(state1, state2): # prep states input for haversine formula for capital distance calulation
+#     lat1 = stateCapitalLat(state1)
+#     lon1 = stateCapitalLon(state1)
+#     lat2 = stateCapitalLat(state2)
+#     lon2 = stateCapitalLon(state2)
     
-    if lat1 == None:
-        print(state1," does not exist")
-        return
-    if lat2 == None:
-        print(state2,"does not exist")
-        return
-    distance = haversineDistanceFormula(lat1, lon1, lat2, lon2)
+#     if lat1 == None:
+#         print(state1," does not exist")
+#         return
+#     if lat2 == None:
+#         print(state2,"does not exist")
+#         return
+#     distance = haversineDistanceFormula(lat1, lon1, lat2, lon2)
 
-    return distance
+#     return distance
 
 def haversineDistanceFormula(lat1, lon1, lat2, lon2): # uses Haversine formula 
     R = 3958.8 # Earths radius in miles (6371.0km)
@@ -224,7 +224,7 @@ def main():
                 direction = calcCardinal(state1, state2)
             else:
                 direction = (bearingToCardinal(calcBearing(lat1, lon1, lat2, lon2)))
-            print("From",state1,"to",state2,"is", distance,"miles",direction)
+            # print("From",state1,"to",state2,"is", distance,"miles",direction)
             sendReply(distance, direction)
         else: # on invalid statename input
             sendReply(None,None)
