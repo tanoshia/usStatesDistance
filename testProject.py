@@ -42,7 +42,7 @@ def multiTest():
         ["California","Nevada"],
         ["Minnesota","TEXAS"],
         ["Florida","Washington"],
-        ["Hawaii","Alaska"],
+        ["Hawaii","Washington"],
         ["Florida","Narnia"],
         ["Narnia","Florida"],
         ["Narnia","Middle Earth"]
