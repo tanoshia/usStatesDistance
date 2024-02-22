@@ -9,6 +9,9 @@ context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
 
+# load the shapefile of the US states
+STATES_GDF = gpd.read_file('./usStatesShapefile-shp/usStatesShapefile.shp')
+
 STATE_CAPITALS = {
     "Alabama":          ("Montgomery", 32.3792, -86.3077),
     "Alaska":           ("Juneau", 58.3019, -134.4197),
@@ -92,9 +95,6 @@ def findNearestPoints(state1, state2):
     # format that the shp has the statenames in
     state1 = state1.upper()
     state2 = state2.upper()
-
-    # load the shapefile of the US states
-    STATES_GDF = gpd.read_file('./usStatesShapefile-shp/usStatesShapefile.shp')
 
     # extract the geometry for state1 using 'State_Name' shp column name
     state1Geo = STATES_GDF[STATES_GDF['State_Name'].str.upper() == state1].geometry.values[0]
