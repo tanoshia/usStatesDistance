@@ -17,3 +17,5 @@ required libraries: <br>
 - geopandas  (to read and interpret the US states map) <br>
     - pip install pyzmq geopandas <br>
 
+## UML 
+<img width="1326" alt="Screenshot 2024-02-21 at 7 13 02 PM" src="https://github.com/tanoshia/usStatesDistance/assets/123522018/9ceccd01-87b8-4e70-b59a-7487d08005d3">
