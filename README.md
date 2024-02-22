@@ -46,4 +46,4 @@ Which could be decoded with
 <img width="1326" alt="Simple UML Sequence Diagram" src="https://github.com/tanoshia/usStatesDistance/assets/123522018/9ceccd01-87b8-4e70-b59a-7487d08005d3">
 
 ## UML (detailed):
-<img width="999" alt="Detailed UML Sequence Diagram" src="https://github.com/tanoshia/usStatesDistance/assets/123522018/7b5cb4ce-4c73-493d-b337-9f287ccf1a20">
+<img width="997" alt="Screenshot 2024-02-21 at 7 29 18 PM" src="https://github.com/tanoshia/usStatesDistance/assets/123522018/13a60997-7a77-4905-baaf-53048151056f">
