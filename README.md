@@ -1,22 +1,22 @@
 # US States Distance
-this service calculates the distance smallest between the two states in miles +/- 1 mile, and the cardinal direction from state1 to state2 <br>
+This service calculates the distance smallest between the two states in miles +/- 1 mile, and the cardinal direction from state1 to state2. From the closest spot on both borders to the other ([example online calculator](statedistance.com/from-california-to-washington)) <br>
 
 Input: [state1,state2] <br>
 Output: [distance,direction] <br>
 
 Example input: ['California','Washington'] <br>
-Example output: [589,'North'] <br>
-
-required libraries:
-- pyzmq      (ZeroMQ for communication) <br>
-- geopandas  (to read and interpret the US states map) <br>
-    - pip install pyzmq geopandas <br>
+Example output: [245,'North'] <br>
 
 Notes:
 - invalid (non-US state name) input will result in [None,None] output <br>
-- input is case insensative <br>
-- test this code out locally via testProject.py which provides an example client to the microservice, run after microservice is running <br>
+- input is case insensitive <br>
+- test this code out locally via testProject.py which provides an example client to the microservice, run after the microservice is running <br>
 <br>
+
+## Required Libraries:
+- pyzmq      (ZeroMQ for communication) <br>
+- geopandas  (to read and interpret the US states map) <br>
+    - pip install pyzmq geopandas <br>
 
 ## Request
 Requesting data from this microservice requires opening the socket locally for zeroMQ to connect to: 
